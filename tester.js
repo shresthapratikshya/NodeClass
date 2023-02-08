@@ -1,18 +1,27 @@
 const express = require("express");
 const { clearScreenDown } = require("readline");
 const app = express();
+const port = 3000;
+const calculation = require("./calculate");
+
 const bodyparser = require("body-parser");
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: false }));
-const port = 3000;
-const calculation = require("./calculate");
-//const {sum}= require("./calculate");
 
+const { login } = require("./calculate");
+const { password } = require("./calculate");
 
 app.get('/calculate', (req, res) => {
     //console.log(calculation.sum(2, 5));
     console.log(calculation.login({ "username": "PATTU" }));
+    res.status(200).send("Success");
 })
+app.post('/credentials', (req, res) => {
+    console.log(calculation.password({ "password": "password" }));
+    res.status(200).send("Success");
+})
+
+
 
 app.post('/login', (req, res) => {
     console.log(req.body);
@@ -36,14 +45,14 @@ app.get('/per-hello', (req, res) => {
     //console.log(req.query['name']);
     const num1 = parseInt(req.query['first']);
     const num2 = parseInt(req.query['second']);
-    sum(num1, num2);
+    summation(num1, num2);
     // console.log(sum);
     // //console.log(req.params['name']);
     res.status(200).send('Hello World')
 
 })
 
-function sum(a, b) {
+function summation(a, b) {
     // const num1 = parseInt(req.query['first']);
     // const num2 = parseInt(req.query['second']);
     const add = a + b;

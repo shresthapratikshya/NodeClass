@@ -1,4 +1,5 @@
 const httpStatus = require("http-status");
+const { request } = require("http");
 
 ((calculation) => { //calculation is the module that is exported
     calculation.sum = (a, b) => {
@@ -9,13 +10,43 @@ const httpStatus = require("http-status");
     }
     calculation.login = async (request) => {
         const isValid = await calculation.loginValidation(request);
-    }
-    calculation.loginValidation = async (request) => {
-        if (request.username == "PATTU") {
+        if (!isValid) {
             return {
                 status: httpStatus.BAD_GATEWAY, message: 'Username required'
             }
         }
-        return a + b;
+        if (request.username == "PATTU") {
+            console.log("Username Accessed");
+        } else {
+            console.log("Username Denied");
+        }
+    }
+    calculation.loginValidation = async (request) => {
+        if (request.username) {
+            return true;
+        }
+        return false;
+    }
+    calculation.password = async (request) => {
+        const isValid = await calculation.passwordValidation(request);
+        if (!isValid) {
+            return {
+                status: httpStatus.BAD_GATEWAY, message: 'Unmatched Password'
+            }
+        }
+        if (request.password == "password") {
+            console.log("Password matched");
+            //res.send("Correct Password");
+        } else {
+            console.log("Password unmatched");
+            //res.send("Incorrect Password");
+        }
+    }
+    calculation.passwordValidation = async (request) => {
+        if (request.password) {
+            return true;
+        } else {
+            return false;
+        }
     }
 })(module.exports)
