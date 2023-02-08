@@ -11,17 +11,22 @@ app.use(bodyparser.urlencoded({ extended: false }));
 const { login } = require("./calculate");
 const { password } = require("./calculate");
 
-app.get('/calculate', (req, res) => {
-    //console.log(calculation.sum(2, 5));
-    console.log(calculation.login({ "username": "PATTU" }));
-    res.status(200).send("Success");
-})
+// app.get('/calculate', (req, res) => {
+//     //console.log(calculation.sum(2, 5));
+//     //console.log(calculation.login({ "username": "PATTU" }));
+//     res.status(200).send("Success");
+// })
+
+const creds = {
+    "username": "PATTU",
+    "password": "password"
+}
+
 app.post('/credentials', (req, res) => {
-    console.log(calculation.password({ "password": "password" }));
+    let a = calculation.login(creds);
+    console.log("Done Done Done");
     res.status(200).send("Success");
 })
-
-
 
 app.post('/login', (req, res) => {
     console.log(req.body);
